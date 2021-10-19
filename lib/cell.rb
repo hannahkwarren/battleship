@@ -7,7 +7,12 @@ class Cell
     @coordinate = coordinate
     @ship = nil
     @fired_counter = 0
-  end
+    # @render = {"nothing" => ".",
+    #             "hit" => "H",
+    #             "miss" => "M",
+    #             "sunk" => "X",
+    #             "ship" => "S"}
+end
 
   def empty?
     if ship == nil
@@ -24,6 +29,7 @@ class Cell
   def fired_upon?
     if @fired_counter == 0
       false
+      # @render.key("nothing")
     else
       true
     end
@@ -36,5 +42,12 @@ class Cell
     @fired_counter += 1
   end
 
+  def render
+    if @fired_counter == 0
+      "."
+    elsif @fired_counter > 0
+      "M"
+    end
+  end
 
 end
