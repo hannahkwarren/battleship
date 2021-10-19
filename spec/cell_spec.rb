@@ -12,7 +12,6 @@ RSpec.describe Cell do
   it 'has a ship' do
     cell = Cell.new("B4")
     expect(cell.ship).to eq(nil)
-
   end
 
   it 'is empty' do
@@ -28,4 +27,13 @@ RSpec.describe Cell do
     expect(cell.empty?).to be(false)
   end
 
+  it 'fire upon' do
+    cell = Cell.new("B4")
+    cruiser = Ship.new("Cruiser", 3)
+    cell.place_ship(cruiser)
+    expect(cell.fired_upon?).to be(false)
+    cell.fire_upon
+    expect(cell.ship.health).to eq(2)
+    expect(cell.fired_upon?).to be(true)
+  end
 end
