@@ -27,5 +27,30 @@ class Board
     @cells.key?(coordinate)
   end
 
-  
+  def valid_placement?(ship, coordinates)
+
+    seq_possible = [(1..4).each_cons(ship.length) {|num| p num}]
+
+    coords = coordinates.each do |coord|
+
+
+    coordinates.select { |coord| coord.start_with?('A')}
+    if a_coords.length == ship.length
+      a_coords.each_cons
+    b_coords = coordinates.select { |coord| coord.start_with?('B')}
+    c_coords = coordinates.select { |coord| coord.start_with?('C')}
+    d_coords = coordinates.select { |coord| coord.start_with?('D')}
+
+    if coordinates values start with same letter
+      then see if numbers match an array in seq_possible
+
+    #if the letters are are all the same, check for range of numbers
+    #if numbers are all the same, check for range of letters
+
+    if coordinates.length == ship.length && coordinates.range(1..4)
+      true
+    else
+      false
+    end
+  end
 end
