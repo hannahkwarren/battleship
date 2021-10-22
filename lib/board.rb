@@ -66,10 +66,13 @@ class Board
   #   require "pry"; binding.pry
   # end
 
-  def valid_placement?(ship, coordinates)
-    ship.length == coordinates.length
-
-
-  end
-
+#   def valid_placement?(ship, coordinates)
+#     if ship.length == coordinates.length
+#       if coordinates_with_same_letter?(ship, coordinates) && consecutive_coordinate_nums?(ship, coordinates)
+#         true
+#       elsif consecutive_coordinate_letters?(ship, coordinates) && coordinates_with_same_nums?(ship, coordinates)
+#         true
+#       end
+#     end
+#   end
 end
