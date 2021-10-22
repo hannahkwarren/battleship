@@ -31,7 +31,7 @@ class Board
     letters = coordinates.map do |letter|
       letter[0]
     end
-    true if letters.uniq.count == 1
+    return letters.uniq.count == 1
   end
 
   def consecutive_coordinate_nums?(ship, coordinates)
@@ -58,21 +58,21 @@ class Board
     possible_letters_arrays.include?(coordinate_letters_array)
   end
 
-  # def coordinates_with_same_nums?(ship, coordinates)
-  #   numbers = coordinates.map do |number|
-  #     number[1]
-  #   end
-  #   true if numbers.uniq.size == 1
-  #   require "pry"; binding.pry
-  # end
+  def coordinates_with_same_nums?(ship, coordinates)
+    numbers = coordinates.map do |number|
+      number[1]
+    end
+    return numbers.uniq.size == 1
+  end
 
-#   def valid_placement?(ship, coordinates)
-#     if ship.length == coordinates.length
-#       if coordinates_with_same_letter?(ship, coordinates) && consecutive_coordinate_nums?(ship, coordinates)
-#         true
-#       elsif consecutive_coordinate_letters?(ship, coordinates) && coordinates_with_same_nums?(ship, coordinates)
-#         true
-#       end
-#     end
-#   end
+  def valid_placement?(ship, coordinates)
+    if coordinates.all? {|coord| valid_coordinate?(coord)} && ship.length == coordinates.length
+      if coordinates_with_same_letter?(ship, coordinates) && consecutive_coordinate_nums?(ship, coordinates)
+        return true
+      elsif consecutive_coordinate_letters?(ship, coordinates) && coordinates_with_same_nums?(ship, coordinates)
+        return true
+      end
+    end
+    return false
+  end
 end
