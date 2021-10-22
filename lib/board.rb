@@ -27,30 +27,49 @@ class Board
     @cells.key?(coordinate)
   end
 
-  def valid_placement?(ship, coordinates)
-
-    seq_possible = [(1..4).each_cons(ship.length) {|num| p num}]
-
-    coords = coordinates.each do |coord|
-
-
-    coordinates.select { |coord| coord.start_with?('A')}
-    if a_coords.length == ship.length
-      a_coords.each_cons
-    b_coords = coordinates.select { |coord| coord.start_with?('B')}
-    c_coords = coordinates.select { |coord| coord.start_with?('C')}
-    d_coords = coordinates.select { |coord| coord.start_with?('D')}
-
-    if coordinates values start with same letter
-      then see if numbers match an array in seq_possible
-
-    #if the letters are are all the same, check for range of numbers
-    #if numbers are all the same, check for range of letters
-
-    if coordinates.length == ship.length && coordinates.range(1..4)
-      true
-    else
-      false
+  def coordinates_with_same_letter?(ship, coordinates)
+    letters = coordinates.map do |letter|
+      letter[0]
     end
+    true if letters.uniq.count == 1
   end
+
+  def consecutive_coordinate_nums?(ship, coordinates)
+    possible_nums_arrays = []
+    possible_nums = (1..4).each_cons(ship.length) do |num|
+      possible_nums_arrays << num
+    end
+    coordinate_numbers_array = coordinates.map do |coord|
+      coord.split(//)
+      coord[1].to_i
+    end
+    possible_nums_arrays.include?(coordinate_numbers_array)
+  end
+
+  def consecutive_coordinate_letters?(ship, coordinates)
+    possible_letters_arrays = []
+    possible_letters = ("A".."D").each_cons(ship.length) do |letter|
+      possible_letters_arrays << letter
+    end
+    coordinate_letters_array = coordinates.map do |coord|
+      coord.split(//)
+      coord[0]
+    end
+    possible_letters_arrays.include?(coordinate_letters_array)
+  end
+
+  # def coordinates_with_same_nums?(ship, coordinates)
+  #   numbers = coordinates.map do |number|
+  #     number[1]
+  #   end
+  #   true if numbers.uniq.size == 1
+  #   require "pry"; binding.pry
+  # end
+
+  def valid_placement?(ship, coordinates)
+    ship.length == coordinates.length
+
+
+  end
+
 end
