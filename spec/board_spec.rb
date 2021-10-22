@@ -31,38 +31,50 @@ RSpec.describe Board do
 
   it "has coordinates with same letters" do
     expect(@board.coordinates_with_same_letter?(@submarine, ["A1", "A2"])).to eq(true)
+    expect(@board.coordinates_with_same_letter?(@submarine, ["A1", "B2"])).to eq(false)
   end
 
   it "has consecutive coordinate numbers" do
     expect(@board.consecutive_coordinate_nums?(@submarine, ["A1", "A2"])).to eq(true)
+    expect(@board.consecutive_coordinate_nums?(@submarine, ["A1", "A4"])).to eq(false)
+    expect(@board.consecutive_coordinate_nums?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
+    expect(@board.consecutive_coordinate_nums?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
   end
 
   it "has consecutive coordinate letters" do
     expect(@board.consecutive_coordinate_letters?(@submarine, ["A1", "A2"])).to eq(false)
+    expect(@board.consecutive_coordinate_letters?(@submarine, ["A1", "B1"])).to eq(true)
   end
 
-  xit "has coordinates with same numbers" do
+  it "has coordinates with same numbers" do
     expect(@board.coordinates_with_same_nums?(@submarine, ["A1", "A2"])).to eq(false)
   end
 
-  xit "valid placement? ship length" do
+  it "valid placement? ship length" do
     expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
   end
 
-  xit "valid placement? consecutive coordinates" do
+  it "valid placement? consecutive coordinates" do
     expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["A3", "A2", "A1"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["C1", "B1"])).to eq(false)
+    expect(@board.valid_placement?(@submarine, ["A1", "A1"])).to eq(false)
+
   end
 
-  xit "valid placement? diagonals" do
+  it "valid placement? valid coordinates" do
+    expect(@board.valid_placement?(@cruiser, ["A1", "B2", "BORK"])).to eq(false)
+    expect(@board.valid_placement?(@submarine, ["C2", "D33"])).to eq(false)
+  end
+
+  it "valid placement? diagonals" do
     expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
   end
 
-  xit "valid placement? good examples" do
+  it "valid placement? good examples" do
     expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
     expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
   end
