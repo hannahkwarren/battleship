@@ -1,3 +1,6 @@
+require_relative "cell"
+require_relative "ship"
+
 class Board
 
   attr_reader :cells
@@ -67,12 +70,21 @@ class Board
 
   def valid_placement?(ship, coordinates)
     if coordinates.all? {|coord| valid_coordinate?(coord)} && ship.length == coordinates.length
-      if coordinates_with_same_letter?(ship, coordinates) && consecutive_coordinate_nums?(ship, coordinates)
-        return true
-      elsif consecutive_coordinate_letters?(ship, coordinates) && coordinates_with_same_nums?(ship, coordinates)
-        return true
+      if coordinates.all? {|coord| @cells[coord].empty?}
+        if coordinates_with_same_letter?(ship, coordinates) && consecutive_coordinate_nums?(ship, coordinates)
+          return true
+        elsif consecutive_coordinate_letters?(ship, coordinates) && coordinates_with_same_nums?(ship, coordinates)
+          return true
+        end
       end
     end
     return false
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coord|
+      @cells[coord].place_ship(ship)
+    end
+  end
+
 end

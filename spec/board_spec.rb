@@ -53,6 +53,7 @@ RSpec.describe Board do
   it "valid placement? ship length" do
     expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
+    expect(@board.valid_placement?(@cruiser, ["A2", "A3", "A4"])).to eq(true)
   end
 
   it "valid placement? consecutive coordinates" do
@@ -61,7 +62,7 @@ RSpec.describe Board do
     expect(@board.valid_placement?(@submarine, ["A3", "A2", "A1"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["C1", "B1"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["A1", "A1"])).to eq(false)
-
+    expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
   end
 
   it "valid placement? valid coordinates" do
@@ -77,6 +78,19 @@ RSpec.describe Board do
   it "valid placement? good examples" do
     expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
     expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
+  end
+
+  it "place ships" do
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    cell_1 = @board.cells["A1"]
+    cell_2 = @board.cells["A2"]
+    cell_3 = @board.cells["A3"]
+    expect(cell_3.ship == cell_2.ship).to eq(true)
+  end
+
+  it "prevent overlap" do
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be(false)
   end
 
 end
