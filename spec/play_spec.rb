@@ -32,7 +32,8 @@ RSpec.describe Play do
   it 'inputs player_placements' do
     #need to ask at checkin about a way to verify
     # that placed cells have a ship object
-    expect(@play.player_placements).to eq()
+    # @play.player_placements
+    # expect(@player_board.cells.empty? = false).to eq()
   end
 
 

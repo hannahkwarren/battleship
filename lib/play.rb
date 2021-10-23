@@ -48,23 +48,25 @@ attr_reader :computer_board, :player_board, :computer_ships, :player_ships
     @player_ships.each do |item|
       loop do
         puts @player_board.render(true)
-        
+
         prompt = "Enter #{item.length} comma-separated cells (e.g. 'A1') where you want the #{item.name} to go."
         puts prompt
 
         user_placement = gets.chomp
         placement = user_placement.split(/\s*, \s*/)
 
-        if @player_board.valid_placement?(item, placement)
+        if @player_board.valid_placement?(item, placement) == false
+          puts "Those are invalid coordinates, please try again:"
+        elsif @player_board.valid_placement?(item, placement)
           @player_board.place(item, placement)
           puts " "
           puts "Here's your current board:"
-          puts @player_board.render(true)
           puts " "
           break
         end
       end
     end
+    puts @player_board.render(true)
   end
 
 end
