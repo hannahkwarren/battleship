@@ -1,3 +1,5 @@
+require_relative 'ship'
+
 class Cell
 
   attr_reader :coordinate, :occupied
