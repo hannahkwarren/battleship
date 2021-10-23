@@ -47,7 +47,7 @@ class Cell
   def render(show_ship = false)
 
     if @fired_counter == 0
-      if show_ship = true && @ship != nil
+      if show_ship == true && @ship != nil
         "S"
       else
         "."
