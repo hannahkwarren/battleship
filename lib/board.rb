@@ -87,4 +87,10 @@ class Board
     end
   end
 
+  def render(show_ships = false)
+    #for each cell on board, print the rendering (w/o S)
+    rows = @cells.values.map {|val| val.render(show_ships)}
+    joined = rows.join
+    return "  1 2 3 4 \n" + "A #{joined[0]}" + " " + "#{joined[1]}" + " " + "#{joined[2]}" + " " + "#{joined[3]} \n" + "B #{joined[4]}" + " " + "#{joined[5]}" + " " + "#{joined[6]}" + " " + "#{joined[7]} \n" + "C #{joined[8]}" + " " + "#{joined[9]}" + " " + "#{joined[10]}" + " " + "#{joined[11]} \n" + "D #{joined[12]}" + " " + "#{joined[13]}" + " " + "#{joined[14]}" + " " + "#{joined[15]} \n"
+  end
 end
