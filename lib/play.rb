@@ -1,14 +1,17 @@
+require_relative 'turn'
+
 class Play
 
-attr_reader :computer_board, :player_board, :computer_ships, :player_ships
+attr_reader :computer_ships, :player_ships, :turn
+attr_accessor :computer_board, :player_board
 
   def initialize
     @computer_board = Board.new
     @player_board = Board.new
     @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
     @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    @turn = turn
   end
-
 
   def start
     puts "Welcome to BATTLESHIP"
@@ -49,7 +52,7 @@ attr_reader :computer_board, :player_board, :computer_ships, :player_ships
       loop do
         puts @player_board.render(true)
 
-        prompt = "Enter #{item.length} comma-separated cells (e.g. 'A1') where you want the #{item.name} to go."
+        prompt = "Enter #{item.length} comma-separated cells (e.g. 'A1, A2'...) where you want the #{item.name} to go."
         puts prompt
 
         user_placement = gets.chomp
@@ -59,14 +62,16 @@ attr_reader :computer_board, :player_board, :computer_ships, :player_ships
           puts "Those are invalid coordinates, please try again:"
         elsif @player_board.valid_placement?(item, placement)
           @player_board.place(item, placement)
-          puts " "
-          puts "Here's your current board:"
-          puts " "
+          puts "\nHere's your current board:\n"
           break
         end
       end
     end
     puts @player_board.render(true)
+  end
+
+  def start_play
+    @turn = Turn.new
   end
 
 end
