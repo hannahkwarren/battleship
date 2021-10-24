@@ -5,19 +5,25 @@
 
 class Turn
 
-  attr_reader :play, :player_shot, :computer_shot
+  attr_reader :play, :player_shot, :computer_shot, :results, :comp_previous_shots, :player_previous_shots
 
   def initialize
     @play = Play.new
     @player_shot = player_shot
     @computer_shot = computer_shot
+    @results = {"." => "nothing",
+                "H" => "hit",
+                "M" => "miss",
+                "X" => "sunk",
+                "S" => "ship"}
+    @player_previous_shots = []
+    @comp_previous_shots = []
   end
 
   def start_turn
     puts "=============COMPUTER BOARD============="
     puts @play.computer_board.render
     puts "==============PLAYER BOARD=============="
-    require "pry"; binding.pry
     puts @play.player_board.render(true)
   end
 
@@ -25,44 +31,45 @@ class Turn
     prompt = "Enter the coordinate for your shot:"
     puts prompt
 
-    @player_shot = [gets.chomp]
+    loop do
+      @player_shot = gets.chomp
 
-    @player_shot.each do |shot|
-      loop do
-        if @play.player_board.valid_coordinate?(shot) == false
-          puts "Please enter a valid coordinate:"
-        elsif @play.player_board.valid_coordinate?(shot)
-          @play.player_board.cells[shot].fire_upon
+      if @play.player_board.valid_coordinate?(@player_shot) == false
+        puts "Please enter a valid coordinate:"
+      elsif @play.player_board.valid_coordinate?(@player_shot)
+        if @player_previous_shots.include?(@player_shot)
+          puts "You've already fired upon this cell. Please try again:"
+        else
+          @play.player_board.cells[@player_shot].fire_upon
+          @player_previous_shots << @player_shot
           break
         end
       end
     end
+
   end
 
   def computer_turn
-    previous_shots = [] # collects all computer shots
 
-    @computer_shot = [@play.computer_board.cells.keys.sample]
+    loop do
 
-    @computer_shot.each do |shot|
-      loop do
-        if @play.computer_board.valid_coordinate?(shot) == false
-          # make another guess
-        elsif @play.computer_board.valid_coordinate?(shot)
-          if previous_shots.include?(shot)
-            # make another guess
-          elsif previous_shots.include?(shot) == false
-            previous_shots << shot
-            @play.computer_board.cells[shot].fire_upon
-            break
-          end
-        end
+      @computer_shot = @play.computer_board.cells.keys.sample
+
+      if @play.computer_board.valid_coordinate?(@computer_shot) && @comp_previous_shots.include?(@computer_shot) == false
+        @play.computer_board.cells[@computer_shot].fire_upon
+        @comp_previous_shots << @computer_shot
+        break
       end
     end
   end
-  #there's no hit, miss, sunk in the coordinate
 
-  # def
-  #
-  # end
+  def show_results
+    player_turn_result = @play.player_board.cells[@player_previous_shots.last].render(true)
+
+    puts "Your shot on #{@player_shot} was a #{@results[player_turn_result]}."
+
+    comp_turn_result = @play.player_board.cells[@comp_previous_shots.last].render()
+
+    puts "My shot on #{@computer_shot} was a #{@results[comp_turn_result]}."
+  end
 end

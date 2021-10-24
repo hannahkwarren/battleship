@@ -10,3 +10,4 @@ play.start_play
 play.turn.start_turn
 play.turn.player_turn
 play.turn.computer_turn
+play.turn.show_results
