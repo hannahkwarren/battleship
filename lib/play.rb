@@ -10,7 +10,7 @@ attr_accessor :computer_board, :player_board
     @player_board = Board.new
     @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
     @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
-    @turn = turn
+    @turn = nil
   end
 
   def start
@@ -26,6 +26,7 @@ attr_accessor :computer_board, :player_board
         puts "Sorry, I didn't get that.
         Please enter p to play or q to quit."
     end
+    user_response
   end
 
   def set_up_game
@@ -70,8 +71,11 @@ attr_accessor :computer_board, :player_board
     puts @player_board.render(true)
   end
 
-  def start_play
-    @turn = Turn.new
+  def play_process
+    @turn = Turn.new(self)
+    # we just need to add logic that loops the turn steps
+    # and ends the game when both of a player's ships are sunk
+    # with an indication of who won
   end
 
 end

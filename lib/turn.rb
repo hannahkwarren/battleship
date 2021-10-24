@@ -1,23 +1,16 @@
-# require 'play'
-# require 'board'
-# require 'cell'
-# require 'ship'
-
 class Turn
 
   attr_reader :play, :player_shot, :computer_shot, :results, :comp_previous_shots, :player_previous_shots
 
-  def initialize
-    @play = Play.new
-    @player_shot = player_shot
+  def initialize(play)
     @computer_shot = computer_shot
+    @player_shot = player_shot
     @results = {"." => "nothing",
                 "H" => "hit",
                 "M" => "miss",
                 "X" => "sunk",
                 "S" => "ship"}
-    @player_previous_shots = []
-    @comp_previous_shots = []
+    @play = play
   end
 
   def start_turn
@@ -37,39 +30,37 @@ class Turn
       if @play.player_board.valid_coordinate?(@player_shot) == false
         puts "Please enter a valid coordinate:"
       elsif @play.player_board.valid_coordinate?(@player_shot)
-        if @player_previous_shots.include?(@player_shot)
+        if @play.player_board.cells[@player_shot].fired_upon?
           puts "You've already fired upon this cell. Please try again:"
         else
           @play.player_board.cells[@player_shot].fire_upon
-          @player_previous_shots << @player_shot
           break
         end
       end
     end
-
   end
 
   def computer_turn
+    possible_shots = @play.computer_board.cells.values.select {|cell| cell.fired_upon? == false}
 
-    loop do
+    @computer_shot = possible_shots.sample #one cell obj
 
-      @computer_shot = @play.computer_board.cells.keys.sample
-
-      if @play.computer_board.valid_coordinate?(@computer_shot) && @comp_previous_shots.include?(@computer_shot) == false
-        @play.computer_board.cells[@computer_shot].fire_upon
-        @comp_previous_shots << @computer_shot
-        break
-      end
-    end
+    @computer_shot.fire_upon
   end
 
   def show_results
-    player_turn_result = @play.player_board.cells[@player_previous_shots.last].render(true)
+    player_turn_result = @play.player_board.cells[@player_shot].render(true)
 
     puts "Your shot on #{@player_shot} was a #{@results[player_turn_result]}."
 
-    comp_turn_result = @play.player_board.cells[@comp_previous_shots.last].render()
+    puts @play.player_board.render(true)
 
-    puts "My shot on #{@computer_shot} was a #{@results[comp_turn_result]}."
+    comp_turn_result = @computer_shot.render
+
+    puts "My shot on #{@computer_shot.coordinate} was a #{@results[comp_turn_result]}."
+
+    puts @play.computer_board.render
   end
+
+
 end
