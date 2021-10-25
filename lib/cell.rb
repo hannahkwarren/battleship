@@ -10,11 +10,6 @@ class Cell
     @ship = nil
     @fired_counter = 0
     @occupied = occupied
-    # @render = {"nothing" => ".",
-    #             "hit" => "H",
-    #             "miss" => "M",
-    #             "sunk" => "X",
-    #             "ship" => "S"}
   end
 
   def empty?
