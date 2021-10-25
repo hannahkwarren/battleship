@@ -28,4 +28,9 @@ RSpec.describe Play do
     "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
     expect(@computer_board.cells.keys).to eq(@player_board.cells.keys)
   end
+
+  it 'has a process' do
+    @turn = Turn.new(self)
+    expect(@turn).to be_instance_of(Turn)
+  end
 end
