@@ -8,7 +8,7 @@ class Turn
     @results = {"." => "nothing",
                 "H" => "hit",
                 "M" => "miss",
-                "X" => "sunk",
+                "X" => "sink",
                 "S" => "ship"}
     @play = play
   end

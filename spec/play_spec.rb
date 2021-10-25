@@ -6,9 +6,10 @@ require './lib/play'
 RSpec.describe Play do
   before(:each) do
     @play = Play.new
-    # @board = Board.new
-    # @cruiser = Ship.new("Cruiser", 3)
-    # @submarine = Ship.new("Submarine", 2)
+    @computer_board = Board.new
+    @player_board = Board.new
+    @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
   end
 
   it 'exists' do
@@ -16,26 +17,20 @@ RSpec.describe Play do
   end
 
   it 'has attributes' do
-    expect(@play.computer_board.render).to eq("  1 2 3 4 \n" +
-                                              "A . . . . \n" +
-                                              "B . . . . \n" +
-                                              "C . . . . \n" +
-                                              "D . . . . \n")
+    expect(@computer_board).to be_instance_of(Board)
+    expect(@player_board).to be_instance_of(Board)
+    expect(@computer_ships.class).to be(Array)
+    expect(@player_ships.class).to be(Array)
   end
 
-  xit 'generates random_computer_placements' do
-    expect(@play.random_computer_placements).to eq(true)
-    #need to ask at our project checkin about a way to test
-    # that the placed cells have a ship object
+  it 'has the same size computer_board and player_board' do
+    expect(@computer_board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2",
+    "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
+    expect(@computer_board.cells.keys).to eq(@player_board.cells.keys)
   end
 
-  xit 'inputs player_placements' do
-    #need to ask at checkin about a way to verify
-    # that placed cells have a ship object
-    # @play.player_placements
-    # expect(@player_board.cells.empty? == false).to eq()
+  it 'has a process' do
+    @turn = Turn.new(self)
+    expect(@turn).to be_instance_of(Turn)
   end
-
-
-
 end
