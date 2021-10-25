@@ -27,13 +27,13 @@ class Turn
     loop do
       @player_shot = gets.chomp
 
-      if @play.player_board.valid_coordinate?(@player_shot) == false
+      if @play.computer_board.valid_coordinate?(@player_shot) == false
         puts "Please enter a valid coordinate:"
-      elsif @play.player_board.valid_coordinate?(@player_shot)
-        if @play.player_board.cells[@player_shot].fired_upon?
+      elsif @play.computer_board.valid_coordinate?(@player_shot)
+        if @play.computer_board.cells[@player_shot].fired_upon?
           puts "You've already fired upon this cell. Please try again:"
         else
-          @play.player_board.cells[@player_shot].fire_upon
+          @play.computer_board.cells[@player_shot].fire_upon
           break
         end
       end
@@ -41,7 +41,7 @@ class Turn
   end
 
   def computer_turn
-    possible_shots = @play.computer_board.cells.values.select {|cell| cell.fired_upon? == false}
+    possible_shots = @play.player_board.cells.values.select {|cell| cell.fired_upon? == false}
 
     @computer_shot = possible_shots.sample #one cell obj
 
@@ -49,17 +49,17 @@ class Turn
   end
 
   def show_results
-    player_turn_result = @play.player_board.cells[@player_shot].render(true)
+    player_turn_result = @play.computer_board.cells[@player_shot].render()
 
     puts "Your shot on #{@player_shot} was a #{@results[player_turn_result]}."
 
-    puts @play.player_board.render(true)
+    puts @play.computer_board.render()
 
     comp_turn_result = @computer_shot.render
 
     puts "My shot on #{@computer_shot.coordinate} was a #{@results[comp_turn_result]}."
 
-    puts @play.computer_board.render
+    puts @play.player_board.render(true)
   end
 
 

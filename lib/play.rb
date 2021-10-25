@@ -6,27 +6,33 @@ attr_reader :computer_ships, :player_ships, :turn
 attr_accessor :computer_board, :player_board
 
   def initialize
-    @computer_board = Board.new
-    @player_board = Board.new
-    @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
-    @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
-    @turn = nil
+    @computer_board = nil
+    @player_board = nil
+    @computer_ships = nil
+    @player_ships = nil
   end
 
   def start
-    puts "Welcome to BATTLESHIP"
-    puts "Enter p to play. Enter q to quit."
-    print ">"
-    user_response = gets.chomp
+    loop do
+      puts "Welcome to BATTLESHIP"
+      puts "Enter p to play. Enter q to quit."
+      print ">"
+      user_response = gets.chomp
       if user_response == "p"
+        @computer_board = Board.new
+        @player_board = Board.new
+        @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+        @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
         self.set_up_game
+        self.play_process
       elsif user_response == "q"
         puts "Goodbye!"
+        break
       else
         puts "Sorry, I didn't get that.
         Please enter p to play or q to quit."
+      end
     end
-    user_response
   end
 
   def set_up_game
@@ -71,11 +77,30 @@ attr_accessor :computer_board, :player_board
     puts @player_board.render(true)
   end
 
-  def play_process
-    @turn = Turn.new(self)
-    # we just need to add logic that loops the turn steps
-    # and ends the game when both of a player's ships are sunk
-    # with an indication of who won
+  def game_over?
+    @player_ships.all? {|ship| ship.sunk?} || @computer_ships.all? {|ship| ship.sunk?}
   end
 
+  def winner
+    if @player_ships.all? {|ship| ship.sunk?}
+      return "I won!"
+    elsif @computer_ships.all? {|ship| ship.sunk?}
+      return "You won!"
+    end
+  end
+
+  def play_process
+    @turn = Turn.new(self)
+
+    while self.game_over? == false
+      @turn.start_turn
+      @turn.player_turn
+      @turn.computer_turn
+      @turn.show_results
+    end
+
+    puts self.winner
+  end
+
+#need to return to the start process
 end
