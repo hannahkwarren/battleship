@@ -6,16 +6,21 @@ require './lib/play'
 RSpec.describe Play do
   before(:each) do
     @play = Play.new
-    # @board = Board.new
-    # @cruiser = Ship.new("Cruiser", 3)
-    # @submarine = Ship.new("Submarine", 2)
+    @computer_board = Board.new
+    @player_board = Board.new
+    @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
   end
 
   it 'exists' do
     expect(@play).to be_instance_of(Play)
+    expect(@computer_board).to be_instance_of(Board)
+    expect(@player_board).to be_instance_of(Board)
+    expect(@computer_ships.class).to be(Array)
+    expect(@player_ships.class).to be(Array)
   end
 
-  it 'has attributes' do
+  xit 'has attributes' do
     expect(@play.computer_board.render).to eq("  1 2 3 4 \n" +
                                               "A . . . . \n" +
                                               "B . . . . \n" +
