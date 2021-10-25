@@ -6,4 +6,4 @@ require './lib/turn'
 
 play = Play.new
 
-response = play.start
+play.start
