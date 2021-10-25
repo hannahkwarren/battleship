@@ -14,18 +14,13 @@ RSpec.describe Play do
 
   it 'exists' do
     expect(@play).to be_instance_of(Play)
+  end
+
+  it 'has attributes' do
     expect(@computer_board).to be_instance_of(Board)
     expect(@player_board).to be_instance_of(Board)
     expect(@computer_ships.class).to be(Array)
     expect(@player_ships.class).to be(Array)
-  end
-
-  xit 'has attributes' do
-    expect(@play.computer_board.render).to eq("  1 2 3 4 \n" +
-                                              "A . . . . \n" +
-                                              "B . . . . \n" +
-                                              "C . . . . \n" +
-                                              "D . . . . \n")
   end
 
   xit 'generates random_computer_placements' do
