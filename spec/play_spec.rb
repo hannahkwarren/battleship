@@ -23,19 +23,9 @@ RSpec.describe Play do
     expect(@player_ships.class).to be(Array)
   end
 
-  xit 'generates random_computer_placements' do
-    expect(@play.random_computer_placements).to eq(true)
-    #need to ask at our project checkin about a way to test
-    # that the placed cells have a ship object
+  it 'has the same size computer_board and player_board' do
+    expect(@computer_board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2",
+    "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
+    expect(@computer_board.cells.keys).to eq(@player_board.cells.keys)
   end
-
-  xit 'inputs player_placements' do
-    #need to ask at checkin about a way to verify
-    # that placed cells have a ship object
-    # @play.player_placements
-    # expect(@player_board.cells.empty? == false).to eq()
-  end
-
-
-
 end
