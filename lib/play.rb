@@ -28,8 +28,7 @@ attr_accessor :computer_board, :player_board
       print ">"
       user_response = gets.chomp
       if user_response == "p"
-        @computer_board = Board.new
-        @player_board = Board.new
+
         @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
         @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
         self.set_up_game
@@ -45,6 +44,13 @@ attr_accessor :computer_board, :player_board
   end
 
   def set_up_game
+    puts "BOARD SIZE: Please enter the number of columns you want in the boards (up to 26):"
+    @columns = Integer(gets)
+    @computer_board = Board.new(@columns)
+    @player_board = Board.new(@columns)
+    @computer_board.custom_board_setup
+    #create player_board cells the same size as computer board
+    @player_board.custom_board_setup
     self.random_computer_placements
     self.player_placements
   end
@@ -104,7 +110,9 @@ attr_accessor :computer_board, :player_board
     while self.game_over? == false
       @turn.start_turn
       @turn.player_turn
+      break if self.game_over? == true
       @turn.computer_turn
+      break if self.game_over? == true
       @turn.show_results
     end
 
