@@ -8,6 +8,7 @@ RSpec.describe Board do
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @board.custom_board_setup
   end
 
   it 'exists' do
@@ -15,6 +16,7 @@ RSpec.describe Board do
   end
 
   it 'it has cells' do
+
     expect(@board.respond_to?(:cells)).to be(true)
     expect(@board.cells).to be_a(Hash)
     expect(@board.cells.length).to eq(16)
@@ -106,6 +108,27 @@ RSpec.describe Board do
                                 "B . . . . \n" +
                                 "C . . . . \n" +
                                 "D . . . . \n")
+  end
+
+  it "renders the board with different sizes" do
+    board2 = Board.new(6)
+    # board2.place(@cruiser, ["A1", "A2", "A3"])
+    board2.custom_board_setup
+    require "pry"; binding.pry
+    expect(@board.render).to eq("  1 2 3 4 5 6\n" +
+                                "A . . . . . .\n" +
+                                "B . . . . . .\n" +
+                                "C . . . . . .\n" +
+                                "D . . . . . .\n" +
+                                "E . . . . . .\n" +
+                                "F . . . . . .\n" )
+    expect(@board.render(true)).to eq("  1 2 3 4 5 6\n" +
+                                "A . . . . . .\n" +
+                                "B . . . . . .\n" +
+                                "C . . . . . .\n" +
+                                "D . . . . . .\n" +
+                                "E . . . . . .\n" +
+                                "F . . . . . .\n" )
   end
 
 end
