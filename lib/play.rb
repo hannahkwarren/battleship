@@ -2,8 +2,8 @@ require_relative 'turn'
 
 class Play
 
-attr_reader :computer_ships, :player_ships, :turn
-attr_accessor :computer_board, :player_board
+attr_reader :turn
+attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
 
   def initialize
     @computer_board = nil
