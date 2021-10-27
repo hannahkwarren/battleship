@@ -1,0 +1,27 @@
+# BATTLESHIP
+
+Welcome to our terminal-based Battleship game! 🚢
+
+Specify your board size, place your ships, and play against the computer in this Ruby-based (v. 2.7.2) adaptation of a classic board game.
+
+We created this game as a paired project assignment in the first Module of Turing School of Software and Design.
+
+## HOW TO PLAY 🧑‍💻
+
+[Install Ruby!](https://www.ruby-lang.org/en/documentation/installation/)
+
+Then run the Battleship Runner file in your terminal with the command:
+
+`ruby battleship_runner.rb`
+
+Then follow the prompts!
+
+### Please note: 💥
+
+We're both early in our development careers, so there's limited validation of inputs (if you enter a board size larger than 26, for example, the game won't work!).
+
+##  Credits 🙏🏻
+
+Many thanks to our Turing mentors, Hanna Davis and Catherine Dean, and our Student Support Contact Leigh Cepriano Pulzone for their guidance and tips!
+
+Thanks also to our instructors, Dani Coleman and Brian Zanti for their assistance (and s/o to Dani for the cool BATTLESHIP title art!)
