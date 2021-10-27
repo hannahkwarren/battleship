@@ -2,7 +2,7 @@
 
 Welcome to our terminal-based Battleship game! 🚢
 
-Specify your board size, place your ships, and play against the computer in this Ruby-based (v. 2.7.2) adaptation of a classic board game.
+Specify your board size, create custom ships, place your ships on the board, and play against the computer in this Ruby (v. 2.7.2) adaptation of the classic board game.
 
 We created this game as a paired project assignment in the first Module of Turing School of Software and Design.
 
