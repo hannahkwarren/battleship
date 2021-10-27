@@ -48,8 +48,15 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
   end
 
   def set_up_game
-    puts "BOARD SIZE: Please enter the number of columns you want in the boards (up to 26):"
-    @columns = Integer(gets)
+    puts "BOARD SIZE: Please enter the number of columns you want in the boards (minimum of 3, maximum of 26):"
+    loop do
+      @columns = Integer(gets)
+      if @columns < 3 || @columns > 26
+        puts "Your board must be no less than 3 cells and no greater than 26 cells long. Try again:"
+      else
+        break
+      end
+    end
     @computer_board = Board.new(@columns)
     @player_board = Board.new(@columns)
     @computer_board.custom_board_setup
@@ -65,7 +72,7 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
         puts "Please name your ship:"
         name = gets.chomp
         puts "How long is #{name}?"
-        
+
           loop do
             length = gets.chomp.to_i
             if length > @columns
@@ -146,7 +153,7 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
       break if self.game_over? == true
       @turn.show_results
     end
-
+    puts @turn.show_results
     puts self.winner
   end
 
