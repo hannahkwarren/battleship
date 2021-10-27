@@ -9,7 +9,7 @@ RSpec.describe Play do
     @computer_board = Board.new
     @player_board = Board.new
     @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
-    @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    @player_ships = [Ship.new("U.S.S. Sierra", 4), Ship.new("U.S.S. Hannah", 5)]
   end
 
   it 'exists' do

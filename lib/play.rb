@@ -9,7 +9,7 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
     @computer_board = nil
     @player_board = nil
     @computer_ships = nil
-    @player_ships = nil
+    @player_ships = []
   end
 
   def start
@@ -30,8 +30,12 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
       if user_response == "p"
 
         @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
-        @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+        # @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+
         self.set_up_game
+        self.create_custom_ships
+        self.random_computer_placements
+        self.player_placements
         self.play_process
       elsif user_response == "q"
         puts "Goodbye!"
@@ -51,8 +55,36 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
     @computer_board.custom_board_setup
     #create player_board cells the same size as computer board
     @player_board.custom_board_setup
-    self.random_computer_placements
-    self.player_placements
+  end
+
+  def create_custom_ships
+    puts "Time to create your ships!"
+    puts "Remember your ship length maximum is #{@columns}."
+
+      loop do
+        puts "Please name your ship:"
+        name = gets.chomp
+        puts "How long is #{name}?"
+        
+          loop do
+            length = gets.chomp.to_i
+            if length > @columns
+              puts "Invalid length, please try again:"
+            elsif length <= @columns
+              ship = Ship.new(name, length)
+              @player_ships << ship
+              break
+            end
+          end
+
+        puts "Would you like to create another ship?"
+        puts "Enter y for Yes or n for No:"
+        print ">"
+        user_response = gets.chomp
+        if user_response == "n"
+          break
+        end
+      end
   end
 
   def random_computer_placements
@@ -66,9 +98,8 @@ attr_accessor :computer_board, :player_board, :computer_ships, :player_ships
   end
 
   def player_placements
-    puts "I have laid out my ships on the grid."
-    puts "You now need to lay out your own two ships."
-    puts "The Cruiser is three cells long, and the Submarine is two cells long."
+    puts "I have laid out my ships on the grid. I have two ships: The Cruiser is three cells long, and the Submarine is two cells long."
+    puts "You now need to lay out your own #{@player_ships.length} ships."
 
     @player_ships.each do |item|
       loop do
