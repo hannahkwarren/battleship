@@ -16,10 +16,6 @@ Then run the Battleship Runner file in your terminal with the command:
 
 Then follow the prompts!
 
-### Please note: 💥
-
-We're both early in our development careers, so there's limited validation of inputs (if you enter a board size larger than 26, for example, the game won't work!).
-
 ##  Credits 🙏🏻
 
 Many thanks to our Turing mentors, Hanna Davis and Catherine Dean, and our Student Support Contact Leigh Cepriano Pulzone for their guidance and tips!
