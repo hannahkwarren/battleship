@@ -40,6 +40,7 @@ class Board
   end
 
   def custom_board_setup
+
     # shorten the all_pairs hash to the correct length
     # per column input
     @char_map = @all_pairs.keep_if {|key| key <= columns}
@@ -114,16 +115,21 @@ class Board
   end
 
   def render(show_ships = false)
-    #for each cell on board, print the rendering (w/o S)
-    rows = @cells.values.map {|val| val.render(show_ships)}
+    
     column_headers = char_map.keys
     row_headers = char_map.values
+    all_renders = ""
 
-
-    self.cells.each_key do |key|
-      column_headers.count.times do
-        self.cells[key].cell.render()
+    all_renders += "  #{column_headers.join(" ")}\n"
+    row_headers.each do |letter|
+      letter = letter
+      all_renders += letter + " "
+      column_headers.each do |number|
+        all_renders += self.cells["#{letter}#{number}"].render(show_ships)
+        all_renders += " "
       end
+      all_renders += "\n"
     end
+    return all_renders
   end
 end

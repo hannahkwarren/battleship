@@ -98,12 +98,12 @@ RSpec.describe Board do
 
   it "render the board" do
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    expect(@board.render).to eq("  1 2 3 4 \n" +
+    expect(@board.render).to eq("  1 2 3 4\n" +
                                 "A . . . . \n" +
                                 "B . . . . \n" +
                                 "C . . . . \n" +
                                 "D . . . . \n")
-    expect(@board.render(true)).to eq("  1 2 3 4 \n" +
+    expect(@board.render(true)).to eq("  1 2 3 4\n" +
                                 "A S S S . \n" +
                                 "B . . . . \n" +
                                 "C . . . . \n" +
@@ -114,21 +114,21 @@ RSpec.describe Board do
     board2 = Board.new(6)
     # board2.place(@cruiser, ["A1", "A2", "A3"])
     board2.custom_board_setup
-    require "pry"; binding.pry
-    expect(@board.render).to eq("  1 2 3 4 5 6\n" +
-                                "A . . . . . .\n" +
-                                "B . . . . . .\n" +
-                                "C . . . . . .\n" +
-                                "D . . . . . .\n" +
-                                "E . . . . . .\n" +
-                                "F . . . . . .\n" )
-    expect(@board.render(true)).to eq("  1 2 3 4 5 6\n" +
-                                "A . . . . . .\n" +
-                                "B . . . . . .\n" +
-                                "C . . . . . .\n" +
-                                "D . . . . . .\n" +
-                                "E . . . . . .\n" +
-                                "F . . . . . .\n" )
+    # require "pry"; binding.pry
+    expect(board2.render).to eq("  1 2 3 4 5 6\n" +
+                                "A . . . . . . \n" +
+                                "B . . . . . . \n" +
+                                "C . . . . . . \n" +
+                                "D . . . . . . \n" +
+                                "E . . . . . . \n" +
+                                "F . . . . . . \n" )
+    expect(board2.render(true)).to eq("  1 2 3 4 5 6\n" +
+                                "A . . . . . . \n" +
+                                "B . . . . . . \n" +
+                                "C . . . . . . \n" +
+                                "D . . . . . . \n" +
+                                "E . . . . . . \n" +
+                                "F . . . . . . \n" )
   end
 
 end
