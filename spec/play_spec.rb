@@ -24,9 +24,7 @@ RSpec.describe Play do
   end
 
   it 'has the same size computer_board and player_board' do
-    expect(@computer_board.cells.keys).to eq(["A1", "A2", "A3", "A4", "B1", "B2",
-    "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"])
-    expect(@computer_board.cells.keys).to eq(@player_board.cells.keys)
+    expect(@computer_board.cells.count).to eq(@player_board.cells.count)
   end
 
   it 'has a process' do

@@ -1,29 +1,56 @@
 require_relative "cell"
 require_relative "ship"
+require_relative "play"
 
 class Board
 
-  attr_reader :cells
+  attr_accessor :cells, :columns, :char_map
 
-  def initialize
-    @cells = {
-      "A1" => cell_1 = Cell.new("A1"),
-      "A2" => cell_2 = Cell.new("A2"),
-      "A3" => cell_3 = Cell.new("A3"),
-      "A4" => cell_4 = Cell.new("A4"),
-      "B1" => cell_5 = Cell.new("B1"),
-      "B2" => cell_6 = Cell.new("B2"),
-      "B3" => cell_7 = Cell.new("B3"),
-      "B4" => cell_8 = Cell.new("B4"),
-      "C1" => cell_9 = Cell.new("C1"),
-      "C2" => cell_10 = Cell.new("C2"),
-      "C3" => cell_11 = Cell.new("C3"),
-      "C4" => cell_12 = Cell.new("C4"),
-      "D1" => cell_13 = Cell.new("D1"),
-      "D2" => cell_14 = Cell.new("D2"),
-      "D3" => cell_15 = Cell.new("D3"),
-      "D4" => cell_16 = Cell.new("D4")
-    }
+  def initialize(columns = 4)
+    @all_pairs = { 1 => "A",
+        2 => "B",
+        3 => "C",
+        4 => "D",
+        5 => "E",
+        6 => "F",
+        7 => "G",
+        8 => "H",
+        9 => "I",
+        10 => "J",
+        11 => "K",
+        12 => "L",
+        13 => "M",
+        14 => "N",
+        15 => "O",
+        16 => "P",
+        17 => "Q",
+        18 => "R",
+        19 => "S",
+        20 => "T",
+        21 => "U",
+        22 => "V",
+        23 => "W",
+        24 => "X",
+        25 => "Y",
+        26 => "Z"
+      }
+    @cells = {}
+    @columns = columns
+    @char_map = nil
+  end
+
+  def custom_board_setup
+
+    # shorten the all_pairs hash to the correct length
+    # per column input
+    @char_map = @all_pairs.keep_if {|key| key <= columns}
+
+    #make the cell hash with nested iteration
+    @char_map.each_value do |val|
+      @char_map.each_key do |key|
+        @cells["#{val}" + "#{key}"] = Cell.new("#{val}" + "#{key}")
+      end
+    end
   end
 
   def valid_coordinate?(coordinate)
@@ -39,7 +66,7 @@ class Board
 
   def consecutive_coordinate_nums?(ship, coordinates)
     possible_nums_arrays = []
-    possible_nums = (1..4).each_cons(ship.length) do |num|
+    possible_nums = (1..@columns).each_cons(ship.length) do |num|
       possible_nums_arrays << num
     end
     coordinate_numbers_array = coordinates.map do |coord|
@@ -51,7 +78,7 @@ class Board
 
   def consecutive_coordinate_letters?(ship, coordinates)
     possible_letters_arrays = []
-    possible_letters = ("A".."D").each_cons(ship.length) do |letter|
+    possible_letters = ("A"..self.char_map.values.last).each_cons(ship.length) do |letter|
       possible_letters_arrays << letter
     end
     coordinate_letters_array = coordinates.map do |coord|
@@ -88,9 +115,21 @@ class Board
   end
 
   def render(show_ships = false)
-    #for each cell on board, print the rendering (w/o S)
-    rows = @cells.values.map {|val| val.render(show_ships)}
-    joined = rows.join
-    return "  1 2 3 4 \n" + "A #{joined[0]}" + " " + "#{joined[1]}" + " " + "#{joined[2]}" + " " + "#{joined[3]} \n" + "B #{joined[4]}" + " " + "#{joined[5]}" + " " + "#{joined[6]}" + " " + "#{joined[7]} \n" + "C #{joined[8]}" + " " + "#{joined[9]}" + " " + "#{joined[10]}" + " " + "#{joined[11]} \n" + "D #{joined[12]}" + " " + "#{joined[13]}" + " " + "#{joined[14]}" + " " + "#{joined[15]} \n"
+    
+    column_headers = char_map.keys
+    row_headers = char_map.values
+    all_renders = ""
+
+    all_renders += "  #{column_headers.join(" ")}\n"
+    row_headers.each do |letter|
+      letter = letter
+      all_renders += letter + " "
+      column_headers.each do |number|
+        all_renders += self.cells["#{letter}#{number}"].render(show_ships)
+        all_renders += " "
+      end
+      all_renders += "\n"
+    end
+    return all_renders
   end
 end
