@@ -13,6 +13,8 @@ RSpec.describe Turn do
     @play.player_board = Board.new
     @play.computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
     @play.player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    @play.computer_board.custom_board_setup
+    @play.player_board.custom_board_setup
     @turn.computer_turn
     @possible_shots = @play.player_board.cells.values.select {|cell| cell.fired_upon? == false}
     @computer_shot = @possible_shots.sample
