@@ -1,6 +1,7 @@
 class Turn
 
-  attr_reader :play, :player_shot, :computer_shot, :results, :comp_previous_shots, :player_previous_shots
+  attr_reader :play,:results, :comp_previous_shots, :player_previous_shots
+  attr_accessor :player_shot, :computer_shot
 
   def initialize(play)
     @computer_shot = computer_shot
